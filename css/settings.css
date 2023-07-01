@@ -1,0 +1,133 @@
+/* Set global styles for the body */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--accent-dark);
+    display: flex;
+  }
+  
+  /* Style the heading elements within the body */
+  body h1 {
+    margin-left: 1%;
+    margin-top: 2.9%;
+    color: var(--text-main);
+  }
+  
+  /* Create a header wrapper */
+  .header_wrap {
+    padding: 10px;
+    position: sticky;
+    top: 210;
+    z-index: 1;
+    overflow: hidden;
+    margin-left: 210px;
+  }
+  
+  /** Theme **/
+  #theme_switch {
+    position: fixed;
+    right: 4vh;
+  }
+
+  /** Toggle Are you sure? **/
+  .delete-toggle {
+    display: flex;
+    align-items: center;
+  }
+
+  .delete-toggle label{
+    color: var(--text);
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .delete-toggle input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  
+  .delete-toggle input[type="checkbox"]:checked::before {
+    content: '✖'; /* Add an x symbol */
+    font-size: 16px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: -3px; /* Adjust the vertical position as needed */
+  }  
+
+  .delete-toggle input[type="checkbox"]:checked {
+    background-color: rgb(0, 175, 152);
+    border-color: rgb(1, 133, 115);
+  }
+  
+  /** Card **/
+  .settings-card {
+    background-color: var(--tab-0);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: auto; /* Add auto margin to center the card horizontally */
+    margin-top: 200px; /* Add margin-top for vertical spacing */
+    max-width: 400px; /* Set a maximum width for the card */
+  }
+  
+  .settings-card h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  
+  .setting {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .setting label {
+    margin-right: 10px;
+  }
+  
+  .setting input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  
+  .setting input[type="checkbox"]:checked {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  @media only screen and (max-width: 360px) {
+    #theme_switch {
+      position: fixed;
+      bottom: 40px;
+      left: 18px;
+      z-index: 1000;
+      width: 33px;
+    }
+
+    .settings-card {
+      position: absolute;
+      top: 80px;
+      left: 150px;
+      margin: 0;
+    }
+  }
+  

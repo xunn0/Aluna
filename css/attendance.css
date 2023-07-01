@@ -1,0 +1,512 @@
+/* Set global styles for the body */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--accent-dark);
+    display: flex;
+}
+
+/* Style the heading elements within the body */
+body h1 {
+    margin-left: 1%;
+    margin-top: 2.9%;
+    color: var(--text-main);
+}
+
+/* Style the side navigation */
+#sidenav {
+    background-color: var(--accent-clr);
+    flex: 0 0 250px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/** Table **/
+/* Set styles for the table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Set padding for table cells */
+th,
+td {
+    padding: 8px;
+}
+
+/* Center align the content of table headers and cells */
+table th,
+table td {
+    text-align: center;
+}
+
+thead th {
+    text-align: center;
+    position: sticky;
+    top: 0;
+    background-color: var(--tab-0);
+    color: var(--text);
+    z-index: 2;
+}
+
+/* Apply background and text colors to alternating table rows */
+table tr:nth-child(even) {
+    background: var(--tab-1);
+    color: var(--tab-text);
+}
+
+table tr:nth-child(odd) {
+    background: var(--tab-2);
+    color: var(--tab-text);
+}
+
+.table-class th:nth-child(2),
+.table-class td:nth-child(2) {
+    width: 30%;
+}
+
+#print-report {
+    position: absolute;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: var(--form);
+    color: var(--text-main);
+    border-color: #75747a;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.print1 {
+    right: 735px;
+    top: 160px;
+}
+
+.print2 {
+    right: 570px;
+    top: 160px;
+}
+
+.print3 {
+    right: 980px;
+    top: 340px;
+}
+
+.table3 th{
+    background-color: var(--tab-0);
+    color: var(--text);
+}
+
+/* Set styles for search input */
+.tb_search {
+    position: absolute;
+    right: 960px;
+    top: 160px;
+    width: 300px;
+    height: 30px;
+}
+
+/* Set styles for search input text */
+.tb_search input {
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+    background-color: var(--form);
+    color: var(--text-main);
+    border-color: #75747a;
+}
+
+/* Set styles for the table container */
+.table-container {
+    margin-top: 22.5vh;
+    position: relative;
+    max-height: 655px;
+    /* Set the maximum height of the table container */
+    overflow-y: auto;
+    /* Enable vertical scrolling */
+    max-width: 100%;
+    /* Adjust the width as needed */
+    margin-left: 400px;
+    /* Adjusted margin-left to move the table to the right by 200px */
+}
+
+.table-class {
+    table-layout: fixed;
+    /* Fix the table layout */
+}
+
+/* Adjust max-height based on the number of rows */
+.table-container.overflow-hidden table {
+    overflow: hidden;
+    max-height: calc((var(--num-rows) * 40px) + 2px);
+    /* Adjust the height based on your layout and row height */
+}
+
+/* Add overflow-y auto to the table body */
+.table-container table tbody {
+    overflow-y: auto;
+}
+
+/* Remove max-height when more than 10 rows */
+.table-container table.show-all-rows {
+    max-height: none;
+}
+
+/* Submit Button */
+.submit-btn {
+    text-decoration: none;
+    display: inline-block;
+    position: absolute;
+    left: 21.5%;
+    top: 60%;
+    margin-top: 10px;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 0 0 0 transparent;
+    transition: all 0.2s ease-in;
+    background-color: var(--sbmt-btn);
+    width: 10%;
+    padding: 10px;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    color: white;
+    box-shadow: 0 0 30px 0 rgba(86, 236, 0, 0.5);
+    background-color: #32ca04;
+    transition: all 0.2s ease-out;
+}
+
+.submit-btn:before {
+    animation: shine 0.5s 0s linear;
+}
+
+.submit-btn:active {
+    box-shadow: 0 0 0 0 transparent;
+    transition: box-shadow 0.2s ease-in;
+}
+
+.submit-btn:before {
+    content: '';
+    display: block;
+    width: 0px;
+    height: 86%;
+    position: absolute;
+    top: 7%;
+    left: 0%;
+    opacity: 0;
+    background: white;
+    box-shadow: 0 0 15px 3px white;
+    transform: skewX(-20deg);
+}
+
+@keyframes shine {
+    from {
+        opacity: 0;
+        left: 0%;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        left: 100%;
+    }
+}
+
+.tb-time label,
+.tb-date label,
+.tb-class label {
+    color: var(--text);
+}
+
+.tb-time,
+.tb-date,
+.tb-class {
+    padding: 8px;
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 13px;
+    margin-left: 8px;
+}
+
+.card {
+    position: absolute;
+    left: 400px;
+    /* Adjusted right position to move the card to the right by 200px */
+    top: 300px;
+    background-color: var(--tab-0);
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    height: 190px;
+    margin: auto;
+}
+
+.tb-class select,
+.tb-time select,
+.tb-date input[type="date"] {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#attendance_date,
+#attendance_time,
+#class_id {
+    color: var(--text-main);
+    border-color: #75747a;
+    background-color: var(--form);
+    font-weight: bold;
+}
+
+.tb-class select {
+    max-width: 118px;
+}
+
+.tb-time select {
+    width: 120px;
+}
+
+/* Styles for the checkbox */
+input[type="checkbox"] {
+    transform: scale(1.4);
+    /* Increase the size to 20px */
+}
+
+/* Success message */
+.success-msg {
+    width: 300px;
+    /* Width of the message */
+    height: 30px;
+    /* Height of the message */
+    position: fixed;
+    /* Fixed position */
+    top: 10%;
+    /* Center vertically */
+    left: 45%;
+    /* Center horizontally */
+    background-color: #DFF2BF;
+    /* Light green background color */
+    color: #270;
+    /* Dark green text color */
+    border-radius: 3px;
+    /* Rounded corners */
+    box-shadow: 0 0 15px rgba(65, 255, 65, 0.8);
+    /* Glowing green border */
+    opacity: 0;
+    /* Hide the message by default */
+    padding: 10px;
+    text-align: center;
+    /* Center text */
+}
+
+/* Failure message */
+.failure-msg {
+    width: 300px;
+    /* Width of the message */
+    height: 30px;
+    /* Height of the message */
+    position: fixed;
+    /* Fixed position */
+    top: 10%;
+    /* Center vertically */
+    left: 45%;
+    /* Center horizontally */
+    transform: translate(-50%, -50%);
+    /* Center the message */
+    background-color: #FFBABA;
+    /* Light red background color */
+    color: #D8000C;
+    /* Dark red text color */
+    border-radius: 3px;
+    /* Rounded corners */
+    box-shadow: 0 0 15px rgba(255, 1, 1, 0.8);
+    /* Glowing red border */
+    opacity: 0;
+    /* Hide the message by default */
+    padding: 10px;
+    text-align: center;
+    /* Center text */
+}
+
+.success-msg,
+.failure-msg {
+    transition: opacity 0.5s ease-in-out;
+}
+
+.toggle-btn {
+    position: absolute;
+    right: 860px;
+    top: 160px;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: var(--form);
+    color: var(--text-main);
+    border-color: #75747a;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.toggle-btn:hover::before {
+    content: attr(title);
+    position: absolute;
+    top: -50px; /* Adjust the distance from the button */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--tab-0);
+    color: var(--text);
+    padding: 10px;
+    border-radius: 10px;
+    white-space: nowrap;
+}
+
+#attendance:hover::before {
+    content: attr(title);
+    position: absolute;
+    top: -50px; /* Adjust the distance from the button */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--tab-0);
+    color: var(--text);
+    padding: 10px;
+    border-radius: 10px;
+    white-space: nowrap;
+}
+
+.absent {
+    color: red;
+    font-weight: bold;
+  }  
+#generate-qr {
+    position: absolute;
+    right: 572px;
+    top: 160px;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: var(--form);
+    color: var(--text-main);
+    border-color: #75747a;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#generate-qr:hover::before {
+    content: attr(title);
+    position: absolute;
+    top: -50px;
+    /* Adjust the distance from the button */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--tab-0);
+    color: var(--text);
+    padding: 10px;
+    border-radius: 10px;
+    white-space: nowrap;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(var(--tab-0), 0.5);
+    z-index: 9999;
+    display: none; /* Hide the overlay by default */
+  }
+  
+  .modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--tab-0);
+    padding: 20px;
+    z-index: 10000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius: 10px; /* Add border radius for curved corners */
+  }
+  
+  .modal .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: var(--text-main);
+    font-size: 13px;
+    cursor: pointer;
+  }
+  
+  .modal img {
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .modal h5.modal-title {
+    color: var(--text);
+  }  
+
+  .reload-icon {
+    cursor: pointer;
+}
+
+/** Theme **/
+#theme_switch {
+    position: fixed;
+    right: 4vh;
+    top: 3.5vh;
+}
+
+.qr-msg {
+    left: 45.2%; 
+    top: 15%; 
+    position:fixed; 
+    z-index: 9999;
+}
+
+#scanner-video {
+    display: none;
+}
+
+@media only screen and (max-width: 360px) {
+    #scanner-video {
+        position: absolute;
+        top: 65px;
+        left: 100px;
+        display: block;
+        width: 240px;
+    }
+
+    h2 {
+        display: none;
+    }
+
+    .qr-msg {
+        display: none;
+    }
+
+    #theme_switch {
+        position: fixed;
+        top: 630px;
+        left: 18px;
+        z-index: 1000;
+        width: 33px;
+        height: 33px;
+    }
+
+    #print-report {
+        display: none;
+    }
+
+    .table-container {
+        position: absolute;
+        top: 250px;
+        left: 45px;
+    }
+}

@@ -1,0 +1,87 @@
+<link rel="stylesheet" type="text/css" href="../css/nav.css">
+<!-- Highligh -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+<div id="page_wrapper">
+  <div id="sidenav" class="sidenav">
+    <div class="sidenav_header">
+      <div class="logo_section">
+        <img src="../img/Student.png" alt="Logo" width="400px">
+        <h3>Aluna</h3>
+      </div>
+
+      <a href="homepage.php" class="sidenav_link">
+        <i class="fa fa-solid fa-house"></i>
+        <h3>Homepage</h3>
+      </a>
+
+      <div class="dropdown">
+        <a href="students.php" class="sidenav_link">
+          <i class="fa fa-solid fa-graduation-cap"></i>
+          <h3>Students</h3>
+          <i class="fa fa-angle-down" aria-hidden="true"></i>
+        </a>
+        <!-- Drop -->
+        <div class="dropdown-content">
+          <a href="marks.php" class="sidenav_link smol">
+            <i class="gap fa-solid fa-file-lines"></i>
+            <h4>Marks</h4>
+          </a>
+          <a href="attendance.php" class="sidenav_link smol">
+            <i class="gap fa-solid fa-list-check"></i>
+            <h4>Attendance</h4>
+          </a>
+        </div>
+      </div>
+
+      <a href="timetable.php" class="sidenav_link">
+        <i class="fa fa-solid fa-table"></i>
+        <h3>Timetable</h3>
+      </a>
+
+      <div class="dropdown">
+        <a href="profile.php" class="sidenav_link">
+          <i class="fa fa-regular fa-circle-user"></i>
+          <h3 class="move">Profile</h3>
+          <i class="fa fa-angle-down" aria-hidden="true"></i>
+        </a>
+        <!-- Drop -->
+        <div class="dropdown-content">
+          <a href="settings.php" class="sidenav_link smol">
+            <i class="gap fa-solid fa-gear"></i>
+            <h4>Settings</h4>
+          </a>
+          <a href="logout.php" class="sidenav_link smol">
+            <i class="gap fa-solid fa-arrow-right-from-bracket"></i>
+            <h4>Logout</h4>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Smooth animation script -->
+<script>
+  // Add smooth animation to sidenav opening/closing
+  $(document).ready(function() {
+    $('.sidenav_link').click(function() {
+      // Toggle the 'active' class on the clicked link
+      $(this).toggleClass('active');
+      
+      // Toggle the 'active' class on the parent dropdown (if any)
+      $(this).parent('.dropdown').toggleClass('active');
+    });
+  });
+</script>
+
+<!-- Highlight.js -->
+<script src="../JS/Highlight.js"></script>
+<!-- FontAwesome -->
+<script src="https://kit.fontawesome.com/9bcf1d89b4.js" crossorigin="anonymous"></script>
+<!-- darkmode -->
+<script src="../JS/dark-mode.js"></script>

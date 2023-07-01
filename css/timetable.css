@@ -1,0 +1,99 @@
+/* Set global styles for the body */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--accent-dark);
+  display: flex;
+}
+
+/* Style the heading elements within the body */
+body h1 {
+  margin-left: 1%;
+  margin-top: 2.9%;
+}
+
+#teach {
+  position: absolute;
+  left: 300px;
+  color: var(--text-main);
+}
+
+.container {
+  margin: auto;
+}
+
+.container table {
+  border: 1px solid var(--tab-0);
+  text-align: center;
+  margin-left: 60px;
+}
+
+.container td:nth-child(1),
+.container th {
+  border: 0.5px solid;
+  background-color: var(--tab-0);
+  color: var(--time);
+}
+
+.container td {
+  border: 0.5px dotted;
+  color: var(--text-main);
+  background-color: var(--class);
+}
+
+.timetable {
+  height: 500px;
+}
+
+.timetable tbody td {
+  height: 60px;
+}
+
+/** Theme **/
+#theme_switch {
+  position: fixed;
+  right: 4vh;
+}
+
+@media only screen and (max-width: 360px) {
+  #theme_switch {
+    position: fixed;
+    bottom: 40px;
+    left: 18px;
+    z-index: 1000;
+    width: 33px;
+  }
+
+  #teach {
+    position: absolute;
+    top: 10px;
+    left: 90px;
+  }
+
+  .container table {
+    width: 320px; /* Adjust the width as needed */
+    max-height: 300px;
+  }
+
+  .timetable {
+    position: absolute;
+    left: 50px;
+    top: 100px;
+    padding: 10px;
+    outline: none;
+    overflow: auto; /* Enable scrolling for smaller screens */
+  }
+
+  table th {
+    width: 100px;
+  }
+
+  /* Enable zooming for smaller screens */
+  @viewport {
+    zoom: 0.8; /* Adjust the zoom level as needed */
+    user-zoom: zoom;
+    max-zoom: 2;
+    min-zoom: 0.5;
+  }
+}

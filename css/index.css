@@ -1,0 +1,518 @@
+/**Login**/
+#signin {
+  background: #ececec;
+  font-family: 'Poppins', sans-serif;
+}
+
+#frm {
+  width: 38%;
+  border-radius: 2px;
+  margin: auto;
+  background: #ececec;
+  text-align: left;
+  padding-top: 10px;
+}
+
+.signInDetails {
+  color: #a3a3a3;
+  font-size: 13px;
+}
+
+/**Login-Grid**/
+.item1 {
+  grid-area: logo;
+}
+
+.item2 {
+  grid-area: quote;
+}
+
+.item3 {
+  grid-area: signin;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'logo logo logo logo quote quote quote'
+    'signin signin signin signin quote quote quote';
+  gap: 1px;
+  /* background-color: #2196F3; */
+  padding-top: 80px;
+}
+
+.grid-container>div {
+  /* background-color: rgba(255, 255, 255, 0.8); */
+  text-align: center;
+}
+
+.item1 {
+  padding-top: 40px;
+  padding-left: 300px;
+  line-height: 0.5;
+  color: #868686;
+}
+
+.item2 {
+  margin-right: 280px;
+}
+
+.item3 {
+  padding-left: 160px;
+}
+
+/**Login-TextInput**/
+.form__group {
+  position: relative;
+  width: 410px;
+}
+
+.form__field {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid #999999;
+  outline: 0;
+  color: #000842;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+
+.form__field:focus {
+  font-weight: 500;
+  border-width: 3px;
+  border-image: linear-gradient(to right, #13d9e7, #000842);
+  border-image-slice: 1;
+}
+
+::placeholder {
+  color: #000842;
+  font-weight: 500;
+  opacity: 1;
+  /* Firefox */
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #000842;
+  font-weight: 500;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #000842;
+  font-weight: 500;
+}
+
+#email {
+  background-size: 16px;
+  background-position: left;
+  background-repeat: no-repeat;
+  margin-bottom: 25px;
+}
+
+#pass {
+  background-size: 16px;
+  background-position: left;
+  background-repeat: no-repeat;
+}
+
+/*Login-RememberMe*/
+.rememberme {
+  font-size: 12px;
+}
+
+#eye {
+  position: absolute;
+  right: 1%;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+/* The container */
+.container {
+  display: block;
+  position: relative;
+  padding-left: 23px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 17px;
+  width: 17px;
+  background-color: #ececec;
+  border: solid 1px #000842;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input~.checkmark {
+  background-color: #cecece;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked~.checkmark {
+  background-color: #93e3ea;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked~.checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 5px;
+  top: 1.07px;
+  width: 5px;
+  height: 8px;
+  border: solid rgb(59, 59, 59);
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+/* Login-Button */
+@keyframes slideMe {
+  0% {
+    transform: skewX(53deg) translateX(500px);
+  }
+
+  100% {
+    transform: skew(0deg);
+  }
+}
+
+@keyframes slideMeOut {
+  0% {
+    transform: skewX(-53deg) translateX(-500px);
+  }
+
+  100% {
+    transform: skew(0deg);
+  }
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block !important;
+}
+
+.ta-r {
+  text-align: right;
+}
+
+.ta-c {
+  text-align: center;
+}
+
+.padT150 {
+  padding-top: 30px;
+}
+
+.padB150 {
+  padding-bottom: 30px;
+}
+
+.button {
+  width: 410px;
+  height: 45px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 900;
+  color: rgb(255, 255, 255);
+  background-color: #93e3ea;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 4px 8px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+}
+
+.button.signin-btn:hover {
+  background-color: #3edbe9;
+  box-shadow: 8px 16px 30px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  transform: translateY(-7px);
+}
+
+/* Login-Banner */
+.quote {
+  background-color: #93e3ea;
+  height: 650px;
+  width: 650px;
+  margin: auto;
+  border-radius: 10px;
+}
+
+.quote p {
+  padding-top: 20px;
+  padding-right: 20px;
+  color: white;
+  font-weight: 600;
+  text-align: right;
+}
+
+.quote i {
+  font-size: 15px;
+}
+
+.quote h2 {
+  color: White;
+  letter-spacing: 1px;
+  text-align: left;
+  margin-left: 100px;
+  margin-top: -140px;
+}
+
+.quote h3 {
+  color: white;
+  line-height: 1.4;
+  letter-spacing: 1px;
+  text-align: left;
+  margin-left: 100px;
+}
+
+.banner-container {
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+.banner-container .banner {
+  border-radius: 10px;
+}
+
+.banner-container .banner .quote {
+  padding: 10px 0px 20px 0px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.quote_area {
+  position: relative;
+  z-index: 100;
+  width: 352px;
+  padding: 10px 24px;
+  color: white;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  text-align: center;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.356);
+  margin-top: -500px;
+  margin-left: 125px;
+}
+
+.banner-container .banner .quote img {
+  width: 400px;
+  height: 500px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.banner-container .banner .content {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* .dot {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 1s ease;
+} */
+.active {
+  background-color: #555555;
+}
+
+.fade {
+  animation-name: fade;
+  animation-duration: 2s;
+}
+
+@keyframes fade {
+  from {
+    opacity: .8
+  }
+
+  to {
+    opacity: 1
+  }
+}
+
+.loginlinks {
+  display: flex;
+  justify-content: center;
+  width: 150%;
+  padding: 5px;
+}
+
+.loginlinks a {
+  padding: 10px;
+  text-decoration: none
+}
+
+/* Responsive implementation */
+
+/* Adjust the following styles for smaller screens */
+@media only screen and (max-width: 360px) {
+  .grid-container {
+    grid-template-areas:
+      'logo'
+      'signin'
+      'quote';
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  .grid-container {
+    margin-top: 0;
+    padding-top: 10px;
+  }
+
+  /* Logo */
+  .item1 {
+    padding: 0;
+    text-align: center;
+    line-height: 1em;
+    width: 360px;
+  }
+
+  .item1 img {
+    width: 340px;
+  }
+
+  .item p {
+    padding: 4px 0px;
+  }
+
+  /* Quote */
+  .item2 {
+    margin-right: 0;
+    margin-bottom: 80px;
+    width: 360px;
+  }
+
+  .quote,
+  .box {
+    height: 150px;
+    width: 340px;
+  }
+
+  .quote p,
+  .quote h2,
+  .quote h3 {
+    display: none;
+  }
+
+  .banner-container .banner .quote {
+    height: 180px;
+  }
+
+  .banner-container .banner .quote img {
+    width: 95%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .quote_area {
+    margin: -160px auto;
+    width: 260px;
+  }
+
+  /* Signin */
+  .item3 {
+    padding: 0px;
+    width: 360px;
+    align-items: center;
+  }
+
+  .item3 h1 {
+    text-align: center;
+  }
+
+  #frm {
+    width: 80%;
+  }
+  
+  #frm h1 {
+    padding-top: 0;
+    margin: 0;
+  }
+
+  .loginlinks {
+    margin: 0;
+    padding: 0%;
+    max-width: 295px;
+  }
+
+  .loginlinks a {
+    padding: 0px 20px;
+  }
+
+  .form__group,
+  .button {
+    width: 100%;
+  }
+
+  .padT150 {
+    padding-top: 20px;
+  }
+  
+  .padB150 {
+    padding-bottom: 20px;
+  }
+
+  #email,
+  #pass {
+    background-position: 10px;
+  }
+
+  .button {
+    height: 40px;
+  }
+}

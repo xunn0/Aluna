@@ -1,0 +1,580 @@
+/* Set global styles for the body */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--accent-dark);
+    display: flex;
+}
+
+/* Style the heading elements within the body */
+body h1 {
+    margin-left: 1%;
+    margin-top: 2.9%;
+    color: var(--text-main);
+}
+
+/* Style the side navigation */
+#sidenav {
+    background-color: var(--accent-clr);
+    flex: 0 0 250px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/** Table **/
+/* Set styles for the table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Set padding for table cells */
+th,
+td {
+    padding: 5px;
+}
+
+/* Center align the content of table headers and cells */
+table th,
+table td {
+    text-align: center;
+}
+
+.table-class thead th {
+    text-align: center;
+}
+
+/* Apply background and text colors to alternating table rows */
+table tr:nth-child(even) {
+    background: var(--tab-1);
+    color: var(--tab-text);
+}
+
+table tr:nth-child(odd) {
+    background: var(--tab-2);
+    color: var(--tab-text);
+}
+
+.table-class th:nth-child(2),
+.table-class td:nth-child(2) {
+    width: 30%;
+}
+
+/* Set styles for pagination links */
+.pagination {
+    margin: 0;
+}
+
+/* Change cursor to pointer on pagination hover */
+.pagination li:hover {
+    cursor: pointer;
+}
+
+/* Create a header wrapper */
+.header_wrap {
+    padding: 10px;
+    position: sticky;
+    top: 210;
+    z-index: 1;
+    overflow: hidden;
+    margin-left: 190px;
+}
+
+/* Set styles for the number of rows dropdown */
+.num_rows {
+    width: 15%;
+    float: left;
+    justify-content: left;
+}
+
+/* Center align the dropdown options */
+.num_rows select {
+    text-align-last: center;
+    background-color: var(--form);
+    color: var(--text-main);
+    border-color: #75747a;
+}
+
+/* Add teacher button */
+.add {
+    position: absolute;
+    right: 860;
+    top: 1;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: var(--form);
+    color: var(--text-main);
+    border-color: #75747a;
+}
+
+#print-report {
+    padding: 8px;
+    border-radius: 5px;
+    background-color: var(--form);
+    color: var(--text-main);
+    border-color: #75747a;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.print1 {
+    position: absolute;
+    right: 730px;
+    top: 1px;
+}
+
+.print3 {
+    position: absolute;
+    right: 850px;
+    top: 1px;
+}
+
+/* Set styles for search input */
+.tb_search {
+    position: absolute;
+    right: 980;
+    top: 5;
+    width: 300px;
+    height: 30px;
+}
+
+/* Set styles for search input text */
+.tb_search input {
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+    background-color: var(--form);
+    color: var(--text-main);
+    border-color: #75747a;
+}
+
+/* Set styles for pagination container */
+.pagination-container {
+    float: left;
+    position: relative;
+    margin-left: 200px;
+}
+
+/* Set styles for pagination links */
+.pagination {
+    display: flex;
+    padding: 0;
+    color: var(--text);
+    background-color: var(--tab-0);
+}
+
+/* Set styles for pagination items */
+.pagination li {
+    text-align: center;
+    border: 1px solid var(--tab-text);
+    padding: 8px 16px;
+}
+
+/* Set styles for the row count display */
+.rows_count {
+    width: 20%;
+    color: #999;
+    position: absolute;
+    bottom: 200;
+    right: 0;
+    padding: 10px;
+}
+
+/* Set styles for the table container */
+.table-container {
+    margin-top: 22vh;
+    position: relative;
+    max-height: 487px;
+    /* Set the maximum height of the table container */
+    overflow-y: auto;
+    /* Enable vertical scrolling */
+}
+
+.table-class {
+    table-layout: fixed;
+    /* Fix the table layout */
+    margin-left: 200px;
+}
+
+.table-class thead {
+    position: sticky;
+    /* Make the header sticky */
+    top: 0;
+    /* Position the header at the top */
+    background-color: #f2f2f2;
+}
+
+.table-class th {
+    position: sticky;
+    /* Make the header cells sticky */
+    top: 0;
+    /* Position the header cells at the top */
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Adjust max-height based on the number of rows */
+.table-container.overflow-hidden table {
+    overflow: hidden;
+    max-height: calc((var(--num-rows) * 40px) + 2px);
+    /* Adjust the height based on your layout and row height */
+}
+
+/* Add overflow-y auto to the table body */
+.table-container table tbody {
+    overflow-y: auto;
+}
+
+/* Remove max-height when more than 10 rows */
+.table-container table.show-all-rows {
+    max-height: none;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: var(--tab-0);
+    color: var(--text);
+}
+
+/* Set styles for the trash icon */
+.fa-trash {
+    margin-left: 15px;
+    color: var(--action-2);
+    cursor: pointer;
+}
+
+/* Set styles for the pen icon */
+.fa-pen-to-square {
+    color: var(--action-1);
+    cursor: pointer;
+}
+
+/** Theme **/
+#theme_switch {
+    position: fixed;
+    right: 4vh;
+}
+
+/* Form CSS */
+.form-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9;
+    background-color: var(--form);
+    color: var(--text-main);
+    max-width: 400px;
+    width: 90%;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border: 2px solid #e83e8c;
+    animation: glowing-border 2s infinite;
+}
+
+@keyframes glowing-border {
+    0% {
+        box-shadow: 0 0 5px #e83e8c;
+    }
+
+    50% {
+        box-shadow: 0 0 20px #e83e8c;
+    }
+
+    100% {
+        box-shadow: 0 0 5px #e83e8c;
+    }
+}
+
+/* Change color of auto-filled input fields */
+.form-popup input:-webkit-autofill,
+.form-popup input:-webkit-autofill:hover,
+.form-popup input:-webkit-autofill:focus,
+.form-popup input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px rgb(0, 175, 152) inset;
+    -webkit-text-fill-color: rgb(255, 255, 255);
+    font-weight: bold;
+    /* Add this line to make the text bold */
+}
+
+/* Keyframe animation for border hover effect */
+@keyframes border-animation {
+    0% {
+        border-color: #39FF14;
+    }
+
+    25% {
+        border-color: #FF69B4;
+    }
+
+    50% {
+        border-color: #39FF14;
+    }
+
+    75% {
+        border-color: #FF69B4;
+    }
+
+    100% {
+        border-color: #39FF14;
+    }
+}
+
+.form-container {
+    text-align: center;
+}
+
+.form-container h2 {
+    margin-bottom: 20px;
+}
+
+.form-container label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.form-container input {
+    background-color: var(--form-input);
+    color: var(--form-text);
+}
+
+.form-container select {
+    background-color: var(--form-input);
+    color: var(--form-text);
+}
+
+.form-container input[type="date"] {
+    border-color: #75747a;
+}
+
+.form-container input[type="text"],
+.form-container input[type="email"],
+.form-container input[type="password"],
+.form-container select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.form-container button[type="submit"],
+.form-container button[type="button"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.form-container .cancel {
+    background-color: var(--cncl-btn);
+}
+
+.form-container .cancel:hover {
+    background-color: var(--cncl-hover);
+}
+
+/* Button Styles */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+/* Submit Button */
+.submit-btn {
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 0 0 0 transparent;
+    transition: all 0.2s ease-in;
+    background-color: var(--sbmt-btn);
+}
+
+.submit-btn:hover {
+    color: white;
+    box-shadow: 0 0 30px 0 rgba(86, 236, 0, 0.5);
+    background-color: #32ca04;
+
+    transition: all 0.2s ease-out;
+}
+
+.submit-btn:before {
+    animation: shine 0.5s 0s linear;
+}
+
+
+.submit-btn:active {
+    box-shadow: 0 0 0 0 transparent;
+    transition: box-shadow 0.2s ease-in;
+}
+
+.submit-btn:before {
+    content: '';
+    display: block;
+    width: 0px;
+    height: 86%;
+    position: absolute;
+    top: 7%;
+    left: 0%;
+    opacity: 0;
+    background: white;
+    box-shadow: 0 0 15px 3px white;
+    transform: skewX(-20deg);
+}
+
+@keyframes shine {
+    from {
+        opacity: 0;
+        left: 0%;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        left: 100%;
+    }
+}
+
+/* Shake Button Hover */
+.btn-shake {
+    background: #000;
+}
+
+.btn-shake:hover {
+    animation: shake 100ms linear;
+    animation-iteration-count: 5;
+}
+
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    50% {
+        transform: translateX(5px);
+    }
+
+    75% {
+        transform: translateX(-5px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/** Mark Search **/
+#insert_student_search {
+    width: 200px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#update_student_search {
+    width: 200px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+@media only screen and (max-width: 360px) {
+    #theme_switch {
+        position: fixed;
+        bottom: 40px;
+        left: 18px;
+        z-index: 1000;
+        width: 33px;
+    }
+
+    .header_wrap {
+        position: absolute;
+        left: 80px;
+        top: 20px;
+        margin: 0;
+        width: 270px;
+    }
+
+    .tb_search {
+        position: absolute;
+        left: 100px;
+        width: 180px;
+    }
+
+    #print_report {
+       display: none;
+    }
+
+    .rows_count {
+        position: absolute;
+        left: 80px;
+        top: 70px;
+        height: 50px;
+        width: 250px;
+    }
+
+    .table-container {
+        position: absolute;
+        left: 80px;
+        top: 120px;
+        width: 600px;
+        margin: 0;
+        padding: 0;
+        overflow-x: auto;
+    }
+
+    .table-container table {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        table-layout: fixed;
+    }
+    
+    .table th:nth-child(n+5),
+    .table td:nth-child(n+5) {
+        display: none;
+    }
+}

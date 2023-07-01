@@ -1,0 +1,108 @@
+<link rel="stylesheet" type="text/css" href="../css/nav.css">
+<!-- Highlight -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+<div id="page_wrapper" class="collapsed">
+  <div id="sidenav" class="sidenav">
+    <div class="sidenav_header">
+      <div class="logo_section">
+        <img src="../img/Student.png" alt="Logo" width="400px">
+        <h3>Aluna</h3>
+      </div>
+
+      <a href="homepage.php" class="sidenav_link">
+        <i class="fa fa-solid fa-house"></i>
+        <h3>Homepage</h3>
+      </a>
+
+      <a href="marks.php" class="sidenav_link">
+        <i class="fa fa-solid fa-file-lines"></i>
+        <h3>Marks</h3>
+      </a>
+
+      <a href="attendance.php" class="sidenav_link">
+        <i class="fa fa-solid fa-list-check"></i>
+        <h3>Attendance</h3>
+      </a>
+
+      <a href="timetable.php" class="sidenav_link">
+        <i class="fa fa-solid fa-table"></i>
+        <h3>Timetable</h3>
+      </a>
+
+      <div class="dropdown">
+        <a href="profile.php" class="sidenav_link">
+          <i class="fa fa-regular fa-circle-user"></i>
+          <h3 class="move">Profile</h3>
+          <i class="fa fa-angle-down" aria-hidden="true"></i>
+        </a>
+        <!-- Drop -->
+        <div class="dropdown-content">
+          <a href="settings.php" class="sidenav_link smol">
+            <i class="gap fa-solid fa-gear"></i>
+            <h4>Settings</h4>
+          </a>
+          <a href="logout.php" class="sidenav_link smol">
+            <i class="gap fa-solid fa-arrow-right-from-bracket"></i>
+            <h4>Logout</h4>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Collapsible button for phone layout -->
+  <div id="nav_collapse_btn" class="hide-desktop">
+    <i class="fa fa-angle-double-left"></i>
+  </div>
+
+  <!-- Smooth animation script -->
+  <script>
+    $(document).ready(function () {
+      function toggleTextVisibility() {
+        $('.sidenav_link span').toggle();
+      }
+
+      $('#sidenav').on('click', function () {
+        toggleTextVisibility();
+      });
+
+      $('#nav_collapse_btn').click(function () {
+        $('#page_wrapper').toggleClass('collapsed');
+        toggleTextVisibility();
+      });
+
+      // Dropdown functionality
+      $('.dropdown').on('mouseenter', function () {
+        $(this).addClass('active');
+        $('.dropdown-content', this).slideDown();
+      }).on('mouseleave', function () {
+        $(this).removeClass('active');
+        $('.dropdown-content', this).slideUp();
+      });
+
+      // Show or hide the collapse button based on screen width
+      $(window).resize(function () {
+        var screenWidth = $(window).width();
+        if (screenWidth >= 767) {
+          $('#nav_collapse_btn').hide();
+          $('#page_wrapper').removeClass('collapsed');
+        } else {
+          $('#nav_collapse_btn').show();
+          $('#page_wrapper').addClass('collapsed');
+        }
+      }).resize(); // Trigger the resize event on page load
+    });
+
+  </script>
+
+  <!-- Highlight.js -->
+  <script src="../JS/Highlight.js"></script>
+  <!-- FontAwesome -->
+  <script src="https://kit.fontawesome.com/9bcf1d89b4.js" crossorigin="anonymous"></script>
+  <!-- darkmode -->
+  <script src="../JS/dark-mode.js"></script>
+</div>
