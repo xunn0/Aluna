@@ -1,6 +1,24 @@
 {
   "dependencies": {
     "axios": "^1.4.0",
-    "dayjs": "^1.11.8"
-  }
+    "dayjs": "^1.11.8",
+    "express": "^4.17.1"
+  },
+  "name": "aluna",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xunn0/Aluna.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xunn0/Aluna/issues"
+  },
+  "homepage": "https://github.com/xunn0/Aluna#readme",
+  "description": ""
 }
