@@ -95,6 +95,9 @@ if (mysqli_connect_errno()) {
                   <a href="delete-stud.php?id=<?php echo $row['student_id']; ?>" onclick="return confirmDelete()">
                     <i class="fa-solid fa-trash"></i>
                   </a>
+                    <a href="#" class="report-icon" data-student-id="<?php echo $student['student_id']; ?>">
+                        <i class="fas fa-chart-line"></i>
+                    </a>
                 </td>
               </tr>
           <?php
@@ -202,9 +205,9 @@ if (mysqli_connect_errno()) {
   </main>
 
   <!-- Pagination script -->
-  <script src="../js/pagination.js"></script>
+  <script src="../JS/pagination.js"></script>
   <!-- student.js -->
-  <script src="../js/student.js"></script>
+  <script src="../JS/student.js"></script>
   <!-- dark-mode.js -->
   <script src="../JS/dark-mode.js"></script>
   <!-- Table.js -->

@@ -16,7 +16,7 @@ $result = $stmt->get_result();
 if (mysqli_num_rows($result) > 0) {
     $row = mysqli_fetch_assoc($result);
 } else {
-    $error = "Teacher not found.";
+    $error = "Student not found.";
 }
 
 if (mysqli_connect_errno()) {
@@ -39,7 +39,7 @@ if (mysqli_connect_errno()) {
             $result = $stmt->execute();
 
             if ($result) {
-                $msg = "Teacher information updated successfully.";
+                $msg = "Student information updated successfully.";
             } else {
                 $error = "Error updating student information.";
             }
@@ -72,7 +72,7 @@ if (mysqli_connect_errno()) {
                         $result = $stmt->execute();
 
                         if ($result) {
-                            $msg = "Teacher password updated successfully.";
+                            $msg = "Student password updated successfully.";
                         } else {
                             $error = "Error updating student password.";
                         }
@@ -83,7 +83,7 @@ if (mysqli_connect_errno()) {
                     $error = "Current password is incorrect.";
                 }
             } else {
-                $error = "Teacher not found.";
+                $error = "Student not found.";
             }
         }
     }
@@ -97,7 +97,7 @@ if (mysqli_connect_errno()) {
     if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
     } else {
-        $error = "Teacher not found.";
+        $error = "Student not found.";
     }
 }
 ?>
@@ -125,7 +125,7 @@ if (mysqli_connect_errno()) {
         <div class="header_wrap"></div>
 
         <div class="card">
-            <h2>Teacher Information</h2>
+            <h2>Student Information</h2>
             <p><b>Name:</b> <?php echo $row['name']; ?></p>
             <p><b>Phone:</b> <?php echo $row['phone']; ?></p>
             <p><b>Email:</b> <?php echo $row['email']; ?></p>
@@ -133,7 +133,7 @@ if (mysqli_connect_errno()) {
             <p><b>Date of Birth:</b> <?php echo $row['dob']; ?></p>
             <p><b>Picture:</b> <?php echo $row['picture']; ?></p>
             <?php if (!empty($row['picture'])) : ?>
-                <img src="../img/<?php echo $row['picture']; ?>" alt="Teacher Picture">
+                <img src="../img/<?php echo $row['picture']; ?>" alt="Student Picture">
             <?php else : ?>
                 <p>No picture available.</p>
             <?php endif; ?>

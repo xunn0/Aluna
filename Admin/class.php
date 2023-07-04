@@ -333,7 +333,7 @@ if (mysqli_connect_errno()) {
     </main>
 
     <!-- mark.js -->
-    <script src="../js/class.js"></script>
+    <script src="../JS/class.js"></script>
     <!-- dark-mode.js -->
     <script src="../JS/dark-mode.js"></script>
     <!-- Table.js -->

@@ -1,19 +1,19 @@
-    <?php
-    // Start a session
-    @session_start();
+<?php
+// Start a session
+@session_start();
 
-    // Prevent caching of the login page
-    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-    header("Cache-Control: post-check=0, pre-check=0", false);
-    header("Pragma: no-cache");
+// Prevent caching of the login page
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
 
-    // Check if the user is already logged in as admin
-    if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true && $_SESSION['role'] === 'admin') {
-        // Redirect to the admin homepage
-        header("Location: homepage.php");
-        exit();
-    }
-    ?>
+// Check if the user is already logged in as admin
+if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true && $_SESSION['role'] === 'admin') {
+    // Redirect to the admin homepage
+    header("Location: homepage.php");
+    exit();
+}
+?>
 
 <html>
 
@@ -28,6 +28,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
 </head>
+
 <body id="signin">
     <div class="grid-container">
         <!--Logo-->
@@ -120,7 +121,7 @@
         <div class="item3">
             <div id="frm">
                 <h1>Sign in</h1>
-                <form action="authentication.php" method="POST" name="myForm" onsubmit="return validateForm()" required>
+                <form action="../Admin/authentication.php" method="POST" name="myForm" onsubmit="return validateForm()" required>
                     <p>
                     <div class="form__group field">
                         <label class="signInDetails"> Email: </label>

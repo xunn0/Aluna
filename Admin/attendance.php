@@ -1,24 +1,24 @@
 <?php
-// Include the database connection file
+
 include('connection.php');
 
-// Initialize variables
+
 $successMsg = $failureMsg = '';
 
-// Check if the form is submitted
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the form data
+
     $classId = $_POST['class_id'];
     $time = $_POST['attendance_time'];
     $date = $_POST['attendance_date'];
     $attendanceData = $_POST['attendance'];
-    $absentData = $_POST['absent']; // Retrieve the absent student IDs
+    $absentData = $_POST['absent']; 
 
-    // Delete existing attendance records for the selected class, time, and date
+
     $deleteQuery = "DELETE FROM attendance WHERE class_id = '$classId' AND time = '$time' AND date = '$date'";
     mysqli_query($con, $deleteQuery);
 
-    // Insert the attendance data into the database
+
     $insertQuery = "INSERT INTO attendance (class_id, time, date, student_id, status) VALUES ";
     $values = array();
     foreach ($attendanceData as $studentId) {
@@ -26,10 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $insertQuery .= implode(', ', $values);
 
-    // Execute the insert query
+
     mysqli_query($con, $insertQuery);
 
-    // Insert the absent students' data into the database
+
     if (!empty($absentData)) {
         $insertAbsentQuery = "INSERT INTO attendance (class_id, time, date, student_id, status) VALUES ";
         $absentValues = array();
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $insertAbsentQuery .= implode(', ', $absentValues);
 
-        // Execute the insert query for absent students
+
         mysqli_query($con, $insertAbsentQuery);
     }
 }
@@ -314,23 +314,26 @@ while ($class = mysqli_fetch_assoc($classesResult)) {
             }
         }
 
-        function printTable() {
-            var tableHtml = document.getElementById('record_table').innerHTML;
+       function printTable() {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'table_template.php', true);
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          var templateContent = xhr.responseText;
+          var tableHtml = document.getElementById('record_table').innerHTML;
+          var combinedHtml = templateContent.replace('<table id="record_table"></table>', tableHtml);
 
-            var newWindow = window.open('', '_blank');
-            newWindow.document.write('<html><head><title>Record Table</title>');
-            newWindow.document.write('<style>');
-            newWindow.document.write('table { border-collapse: collapse; width: 100%; }');
-            newWindow.document.write('th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }');
-            newWindow.document.write('</style>');
-            newWindow.document.write('</head><body>');
-            newWindow.document.write('<h2>Record Table</h2>');
-            newWindow.document.write('<table>' + tableHtml + '</table>');
-            newWindow.document.write('</body></html>');
-            newWindow.document.close();
+          // Create a new window to display the PDF preview
+          var newWindow = window.open('', '_blank');
+          newWindow.document.write(combinedHtml);
+          newWindow.document.close();
 
-            newWindow.print();
+          // Call the print function on the new window
+          newWindow.print();
         }
+      };
+      xhr.send();
+    }
 
         function searchTable() {
             var searchInput = document.getElementById('searchBar').value.toLowerCase();

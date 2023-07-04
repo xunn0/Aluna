@@ -93,6 +93,10 @@ table tr:nth-child(odd) {
     top: 340px;
 }
 
+.table3 {
+    color: var(--text-main);
+}
+
 .table3 th{
     background-color: var(--tab-0);
     color: var(--text);
@@ -472,19 +476,16 @@ input[type="checkbox"] {
 
 #scanner-video {
     display: none;
+    width: 500px;
 }
 
-@media only screen and (max-width: 360px) {
+@media screen and (max-device-width: 480px) {
     #scanner-video {
         position: absolute;
-        top: 65px;
-        left: 100px;
+        top: 120px;
+        left: 380px;
         display: block;
-        width: 240px;
-    }
-
-    h2 {
-        display: none;
+        width: 500px;
     }
 
     .qr-msg {
@@ -493,11 +494,8 @@ input[type="checkbox"] {
 
     #theme_switch {
         position: fixed;
-        top: 630px;
-        left: 18px;
-        z-index: 1000;
-        width: 33px;
-        height: 33px;
+        right: 3vh;
+        width: 40px;
     }
 
     #print-report {
@@ -506,7 +504,7 @@ input[type="checkbox"] {
 
     .table-container {
         position: absolute;
-        top: 250px;
-        left: 45px;
+        top: 780px;
+        left: 290px;
     }
 }

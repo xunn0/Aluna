@@ -1,15 +1,13 @@
 <?php
 session_start();
-// Include the database connection file
+
 include('connection.php');
 
-// Initialize variables
 $studentId = $_SESSION['student_id'];
 $recordMsg = '';
 
-// Fetch the attendance record for the current logged in student
 $fetchAttendanceQuery = "SELECT class.name,
-                        COUNT(CASE WHEN attendance.status = 'Present' THEN 1 END) AS classes_attended,
+                        COUNT(CASE WHEN attendance.status = 'present' THEN 1 END) AS classes_attended,
                         COUNT(attendance.status) AS total_classes
                         FROM attendance
                         INNER JOIN class ON attendance.class_id = class.class_id
@@ -19,9 +17,7 @@ $fetchAttendanceQuery = "SELECT class.name,
 
 $attendanceResult = mysqli_query($con, $fetchAttendanceQuery);
 
-// Check if the attendance record is empty
 if (mysqli_num_rows($attendanceResult) > 0) {
-    // Generate the HTML table for the attendance record
     $recordMsg .= '<table id="record_table">';
     $recordMsg .= '<tr><th>Class Name</th><th>Attendance Percentage</th></tr>';
 
@@ -39,169 +35,201 @@ if (mysqli_num_rows($attendanceResult) > 0) {
     $recordMsg = 'No attendance record found.';
 }
 
-// Check if the request contains the scanned QR code content
 if (isset($_POST['qr_content'])) {
     $qrContent = $_POST['qr_content'];
 
-    // Extract the class ID, time, and date from the QR code content
     list($classId, $time, $date) = explode('|', $qrContent);
 
-    // Check if the student has already attended the class
-    $checkAttendanceQuery = "SELECT * FROM attendance WHERE student_id = '$studentId' AND class_id = '$classId' AND `date` = '$date'";
+    // Check if the student is enrolled in the class
+    $checkEnrollmentQuery = "SELECT * FROM class_student WHERE student_id = '$studentId' AND class_id = '$classId'";
+    $enrollmentResult = mysqli_query($con, $checkEnrollmentQuery);
 
-    $attendanceResult = mysqli_query($con, $checkAttendanceQuery);
+    if (mysqli_num_rows($enrollmentResult) > 0) {
+        $checkAttendanceQuery = "SELECT * FROM attendance WHERE student_id = '$studentId' AND class_id = '$classId' AND `date` = '$date'";
+        $attendanceResult = mysqli_query($con, $checkAttendanceQuery);
 
-    if (mysqli_num_rows($attendanceResult) > 0) {
-        // The student has already attended this class
-        $updateAttendanceQuery = "UPDATE attendance SET `time` = '$time', `status` = 'Present' WHERE student_id = '$studentId' AND class_id = '$classId' AND `date` = '$date'";
+        if (mysqli_num_rows($attendanceResult) > 0) {
+            $attendanceData = mysqli_fetch_assoc($attendanceResult);
+            $existingTime = $attendanceData['time'];
+            $existingStatus = $attendanceData['status'];
 
-        if (mysqli_query($con, $updateAttendanceQuery)) {
-            // Attendance updated successfully
-            echo 'Attendance updated.';
+            if ($existingTime == $time) {
+                if ($existingStatus == 'absent') {
+                    $updateAttendanceQuery = "UPDATE attendance SET `status` = 'present' WHERE student_id = '$studentId' AND class_id = '$classId' AND `date` = '$date'";
+
+                    if (mysqli_query($con, $updateAttendanceQuery)) {
+                        echo 'Attendance Updated.';
+                    } else {
+                        echo 'Failed to update attendance.';
+                    }
+                } else {
+                    echo 'Attendance Updated.';
+                }
+            } else {
+                $updateAttendanceQuery = "UPDATE attendance SET `time` = '$time', `status` = 'present' WHERE student_id = '$studentId' AND class_id = '$classId' AND `date` = '$date'";
+
+                if (mysqli_query($con, $updateAttendanceQuery)) {
+                    echo 'Attendance Updated.';
+                } else {
+                    echo 'Failed to update attendance.';
+                }
+            }
         } else {
-            // Error updating attendance
-            echo 'Failed to update attendance.';
+            $insertAttendanceQuery = "INSERT INTO attendance (student_id, class_id, `time`, `date`, `status`) VALUES ('$studentId', '$classId', '$time', '$date', 'present')";
+
+            if (mysqli_query($con, $insertAttendanceQuery)) {
+                echo 'Attendance Recorded.';
+            } else {
+                echo 'Failed to record attendance.';
+            }
         }
     } else {
-        // Record the attendance in the database
-        $insertAttendanceQuery = "INSERT INTO attendance (student_id, class_id, `time`, `date`, `status`) VALUES ('$studentId', '$classId', '$time', '$date', 'present')";
-
-        if (mysqli_query($con, $insertAttendanceQuery)) {
-            // Attendance recorded successfully
-            echo 'Attendance recorded.';
-        } else {
-            // Error recording attendance
-            echo 'Failed to record attendance.';
-        }
+        echo 'not_enrolled';
     }
-} else {
+    exit; // Stop further execution to prevent rendering the HTML content
 }
-
 ?>
+
 
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>Aluna-Attendance</title>
-    <link rel="stylesheet" type="text/css" href="../css/attendance.css">
-    <link rel="stylesheet" type="text/css" href="../css/nav.css">
-    <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-    <link rel="stylesheet" type="text/css" href="https://rawgit.com/schmich/instascan-builds/master/css/instascan.min.css">
-    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+  <title>Aluna-Attendance</title>
+  <link rel="stylesheet" type="text/css" href="../css/attendance.css">
+  <link rel="stylesheet" type="text/css" href="../css/nav.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 </head>
 
 <body>
-    <!-- Nav -->
-    <div id="nav-placeholder"></div>
-    <h2 style="margin-left: 30px;">My Attendance Record</h2>
-    <h3 class="qr-msg">QR attendance scanning is only available on mobile</h3>
-    <button id="print-report" class="print3" onclick="printTable()">Print Report</button>
+  <!-- Nav -->
+  <div id="nav-placeholder"></div>
+  <h2 style="margin-left: 30px;">My Attendance Record</h2>
+  <h3 class="qr-msg">QR attendance scanning is only available on mobile</h3>
+  <button id="print-report" class="print3" onclick="printTable()">Print Report</button>
 
-    <video id="scanner-video"></video>
-    <div id="scanned-content"></div>
+  <video id="scanner-video"></video>
+  <div id="scanned-content"></div>
 
-    <div class="table-container table3" style="margin-top: 20%; margin-left: 10%;">
-        <?php echo $recordMsg; ?>
-    </div>
+  <div class="table-container table3" style="margin-top: 20%; margin-left: 10%;">
+    <?php echo $recordMsg; ?>
+  </div>
 
-    <!-- darkmode -->
-    <main>
-        <header>
-            <div>
-                <a id="theme_switch">
-                    <i onclick="toggleDarkMode()" class='fa-solid fa-sun'></i>
-                </a>
-            </div>
-        </header>
-    </main>
+  <script>
+    function printTable() {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'table_template.php', true);
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          var templateContent = xhr.responseText;
+          var tableHtml = document.getElementById('record_table').innerHTML;
+          var combinedHtml = templateContent.replace('<table id="record_table"></table>', tableHtml);
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- nav.js -->
-    <script src="../JS/nav.js"></script>
-    <!-- dark-mode.js -->
-    <script src="../JS/dark-mode.js"></script>
-    <!-- Table.js -->
-    <script src="../JS/Table.js"></script>
-    <script>
-        function printTable() {
-            var tableHtml = document.getElementById('record_table').innerHTML;
+          // Create a new window to display the PDF preview
+          var newWindow = window.open('', '_blank');
+          newWindow.document.write(combinedHtml);
+          newWindow.document.close();
 
-            var newWindow = window.open('', '_blank');
-            newWindow.document.write('<html><head><title>Record Table</title>');
-            newWindow.document.write('<style>');
-            newWindow.document.write('table { border-collapse: collapse; width: 100%; }');
-            newWindow.document.write('th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }');
-            newWindow.document.write('</style>');
-            newWindow.document.write('</head><body>');
-            newWindow.document.write('<h2>Record Table</h2>');
-            newWindow.document.write('<table>' + tableHtml + '</table>');
-            newWindow.document.write('</body></html>');
-            newWindow.document.close();
-
-            newWindow.print();
+          // Call the print function on the new window
+          newWindow.print();
         }
+      };
+      xhr.send();
+    }
 
+    function initializeScanner() {
+  var scannerVideo = document.getElementById('scanner-video');
 
-        // Check if the device is a phone based on screen width
-        function isPhoneLayout() {
-            return window.innerWidth <= 360; // Adjust the breakpoint as needed
-        }
+  var scanner = new Instascan.Scanner({ video: scannerVideo });
+  scanner.addListener('scan', function (content) {
+    var qrData = content.split('|');
+    var classId = qrData[0];
+    var time = qrData[1];
+    var date = qrData[2];
 
-        // Initialize the QR code scanner
-        function initializeScanner() {
-            var scanner = new Instascan.Scanner({
-                video: document.getElementById('scanner-video')
-            });
-
-            scanner.addListener('scan', function(content) {
-                // Send an HTTP POST request to record the attendance
-                fetch('attendance.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: 'student_id=' + encodeURIComponent(<?php echo json_encode($studentId); ?>) + '&qr_content=' + encodeURIComponent(content),
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            console.log('Attendance recorded successfully.');
-                        } else {
-                            console.error('Failed to record attendance.');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Failed to record attendance.', error);
-                    });
-
-
-                // For example, display the scanned content on the page
-                document.getElementById('scanned-content').textContent = content;
-            });
-
-            Instascan.Camera.getCameras().then(function(cameras) {
-                if (cameras.length > 0 && isPhoneLayout()) {
-                    scanner.start(cameras[0]); // Use the first available camera
-                } else {
-                    console.log('No cameras found or not in phone layout.');
-                }
-            }).catch(function(error) {
-                console.error(error);
-            });
-        }
-
-        window.onload = function() {
-            initializeScanner();
-        };
-
-        window.addEventListener('resize', function() {
-            if (scanner) {
-                scanner.stop();
+    fetch('attendance.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body:
+        'student_id=' +
+        encodeURIComponent(<?php echo json_encode($studentId); ?>) +
+        '&qr_content=' +
+        encodeURIComponent(content)
+    })
+      .then(function (response) {
+        if (response.ok) {
+          response.text().then(function (data) {
+            if (data === 'not_enrolled') {
+              swal("You are not enrolled in this class.", "", "error");
+            } else {
+              swal("Attendance recorded.", "", "success");
             }
-            initializeScanner();
+          });
+        } else {
+          swal("Failed to record attendance.", "", "error");
+        }
+      })
+      .catch(function (error) {
+        console.error('Failed to record attendance.', error);
+        swal("Failed to record attendance.", "", "error");
+      });
+  });
+
+      var selectedCamera = null;
+
+      Instascan.Camera.getCameras()
+        .then(function (cameras) {
+          if (cameras.length > 0) {
+            // Find the back camera
+            var backCamera = cameras.find(function (camera) {
+              return camera.name.toLowerCase().includes('back');
+            });
+
+            // Use the back camera if found, otherwise use the first available camera
+            selectedCamera = backCamera || cameras[0];
+
+            scanner.start(selectedCamera);
+          } else {
+            console.error('No cameras found.');
+          }
+        })
+        .catch(function (error) {
+          console.error('Error accessing cameras:', error);
         });
-    </script>
+
+      // Remove mirroring effect from video feed
+      scannerVideo.style.transform = 'scaleX(1)';
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      initializeScanner();
+    });
+
+  </script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- nav.js -->
+  <script src="../JS/nav.js"></script>
+  <!-- dark-mode.js -->
+  <script src="../JS/dark-mode.js"></script>
+  <!-- Table.js -->
+  <script src="../JS/Table.js"></script>
+  <!-- darkmode -->
+  <main>
+    <header>
+      <div>
+        <a id="theme_switch">
+          <i onclick="toggleDarkMode()" class='fa-solid fa-sun'></i>
+        </a>
+      </div>
+    </header>
+  </main>
+
 </body>
 
 </html>
+

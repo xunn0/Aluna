@@ -1,25 +1,25 @@
 <?php
-// Include the database connection file
+
 include('connection.php');
 include('phpqrcode/qrlib.php');
 
-// Initialize variables
+
 $successMsg = $failureMsg = '';
 
-// Check if the form is submitted
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the form data
+
     $classId = $_POST['class_id'];
     $time = $_POST['attendance_time'];
     $date = $_POST['attendance_date'];
     $attendanceData = $_POST['attendance'];
-    $absentData = $_POST['absent']; // Retrieve the absent student IDs
+    $absentData = $_POST['absent']; 
 
-    // Delete existing attendance records for the selected class, time, and date
+
     $deleteQuery = "DELETE FROM attendance WHERE class_id = '$classId' AND time = '$time' AND date = '$date'";
     mysqli_query($con, $deleteQuery);
 
-    // Insert the attendance data into the database
+
     $insertQuery = "INSERT INTO attendance (class_id, time, date, student_id, status) VALUES ";
     $values = array();
     foreach ($attendanceData as $studentId) {
@@ -27,10 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $insertQuery .= implode(', ', $values);
 
-    // Execute the insert query
+
     mysqli_query($con, $insertQuery);
 
-    // Insert the absent students' data into the database
+
     if (!empty($absentData)) {
         $insertAbsentQuery = "INSERT INTO attendance (class_id, time, date, student_id, status) VALUES ";
         $absentValues = array();
@@ -39,12 +39,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $insertAbsentQuery .= implode(', ', $absentValues);
 
-        // Execute the insert query for absent students
+
         mysqli_query($con, $insertAbsentQuery);
     }
 }
 
-// Fetch all students from the student table
+
 $fetchStudentsQuery = "SELECT DISTINCT student.*, c.form 
                        FROM student 
                        LEFT JOIN class_student cs ON student.student_id = cs.student_id
@@ -52,14 +52,14 @@ $fetchStudentsQuery = "SELECT DISTINCT student.*, c.form
 
 $studentsResult = mysqli_query($con, $fetchStudentsQuery);
 
-// Fetch all classes and their forms from the class_student table
+
 $fetchClassesQuery = "SELECT DISTINCT c.class_id, c.name, c.form
                       FROM class_student cs
                       INNER JOIN class c ON cs.class_id = c.class_id";
 
 $classesResult = mysqli_query($con, $fetchClassesQuery);
 
-// Fetch all rows from the classesResult and store them in an array
+
 $classes = [];
 while ($class = mysqli_fetch_assoc($classesResult)) {
     $classes[] = $class;
@@ -77,6 +77,8 @@ while ($class = mysqli_fetch_assoc($classesResult)) {
     <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
 
     <script>
         var isQRCodeUsed = false;
@@ -84,7 +86,7 @@ while ($class = mysqli_fetch_assoc($classesResult)) {
         function filterStudents() {
             var selectedClass = document.getElementById('class_id').value;
 
-            // Filter the attendance table
+
             var attendanceTable = document.getElementById('attendance_table');
             var attendanceRows = attendanceTable.getElementsByTagName('tr');
 
@@ -94,8 +96,8 @@ while ($class = mysqli_fetch_assoc($classesResult)) {
                 var studentClasses = row.getAttribute('data-classes').split(',');
 
                 if (selectedClass === '' || studentClasses.includes(selectedClass)) {
-                    row.style.display = ''; // Display the student
-                    row.querySelector('input[name="attendance"]').disabled = false; // Enable the checkbox
+                    row.style.display = ''; 
+                    row.querySelector('input[name="attendance"]').disabled = false; 
                 } else {
                     var selectedClassLength = selectedClass.length;
 
@@ -112,17 +114,17 @@ while ($class = mysqli_fetch_assoc($classesResult)) {
                     }
 
                     if (found) {
-                        row.style.display = ''; // Display the student
-                        row.querySelector('input[name="attendance"]').disabled = false; // Enable the checkbox
+                        row.style.display = '';
+                        row.querySelector('input[name="attendance"]').disabled = false; 
                     } else {
-                        row.style.display = 'none'; // Hide the student
-                        row.querySelector('input[name="attendance"]').disabled = true; // Disable the checkbox
-                        row.querySelector('input[name="attendance"]').checked = false; // Uncheck the checkbox
+                        row.style.display = 'none';
+                        row.querySelector('input[name="attendance"]').disabled = true; 
+                        row.querySelector('input[name="attendance"]').checked = false; 
                     }
                 }
             }
 
-            // Disable all checkboxes if no class is selected
+           
             var checkboxes = document.querySelectorAll('input[name="attendance"]');
             if (selectedClass === '') {
                 checkboxes.forEach(function(checkbox) {
@@ -130,7 +132,7 @@ while ($class = mysqli_fetch_assoc($classesResult)) {
                 });
             }
 
-            // Filter the record table
+            
             var recordTable = document.getElementById('record_table');
             var recordRows = recordTable.getElementsByTagName('tr');
 
@@ -140,9 +142,9 @@ while ($class = mysqli_fetch_assoc($classesResult)) {
                 var classId = classIdWithName.split(' | ')[0];
 
                 if (selectedClass === '-- Select Class --' || classId === selectedClass || selectedClass === '') {
-                    row.style.display = ''; // Display the record
+                    row.style.display = '';
                 } else {
-                    row.style.display = 'none'; // Hide the record
+                    row.style.display = 'none'; 
                 }
             }
 
@@ -152,15 +154,15 @@ while ($class = mysqli_fetch_assoc($classesResult)) {
             var selectElement = document.getElementById("class_id");
             var checkboxes = document.querySelectorAll(".checkbox-class");
 
-            // Get the selected value
+         
             var selectedValue = selectElement.value;
 
-            // Disable or enable checkboxes based on the selected value
+          
             checkboxes.forEach(function(checkbox) {
                 checkbox.disabled = selectedValue === "-- Select Class --";
             });
 
-            // Call the reloadRecordTable() function
+          
             reloadRecordTable();
         }
 
@@ -178,10 +180,10 @@ while ($class = mysqli_fetch_assoc($classesResult)) {
             });
         }
 
-        // Call the function initially to set the tooltip messages
+      
         updateCheckboxTooltip();
 
-        // Update the tooltip messages whenever the class select changes
+   
         var selectElement = document.getElementById("class_id");
         selectElement.addEventListener('change', updateCheckboxTooltip);
 
@@ -191,9 +193,9 @@ while ($class = mysqli_fetch_assoc($classesResult)) {
             var date = document.getElementById('attendance_date').value;
             var checkboxes = document.querySelectorAll('input[name="attendance"]');
             var attendanceData = [];
-            var absentData = []; // Array to store IDs of absent students
+            var absentData = []; 
 
-            // Get the selected and absent students
+           
             checkboxes.forEach(function(checkbox) {
                 var row = checkbox.parentNode.parentNode;
                 var studentId = row.cells[0].innerText;
@@ -205,7 +207,7 @@ while ($class = mysqli_fetch_assoc($classesResult)) {
                     var found = false;
 
                     if (selectedClass === '') {
-                        // If no class is selected, consider the student absent
+                    
                         found = true;
                     } else {
                         for (var j = 0; j < studentClasses.length; j++) {
@@ -225,31 +227,31 @@ while ($class = mysqli_fetch_assoc($classesResult)) {
                 }
             });
 
-            // Check if class is selected
+        
             if (selectedClass === "") {
                 alert("Please select a class.");
                 return;
             }
 
-            // Check if time is selected
+         
             if (time === "") {
                 alert("Please select a time.");
                 return;
             }
 
-            // Check if date is selected
+        
             if (date === "") {
                 alert("Please select a date.");
                 return;
             }
 
-            // Check if at least one student is selected
+         
             if (!isQRCodeUsed && attendanceData.length === 0) {
                 alert("Please select at least one student.");
                 return;
             }
 
-            // Perform AJAX request to submit the attendance
+        
             $.ajax({
                 url: '<?php echo $_SERVER["PHP_SELF"]; ?>',
                 method: 'POST',
@@ -258,44 +260,44 @@ while ($class = mysqli_fetch_assoc($classesResult)) {
                     attendance_time: time,
                     attendance_date: date,
                     attendance: attendanceData,
-                    absent: absentData // Pass the absent student IDs
+                    absent: absentData 
                 },
                 success: function(response) {
-                    // Display success message
+                  
                     var successMsg = document.getElementById('success-msg');
                     successMsg.innerText = "Attendance Recorded!";
-                    successMsg.style.opacity = '1'; // Show the success message
+                    successMsg.style.opacity = '1'; 
 
                     var failureMsg = document.getElementById('failure-msg');
-                    failureMsg.style.opacity = '0'; // Hide the failure message
+                    failureMsg.style.opacity = '0';
 
-                    // Hide the success message smoothly after 2 seconds
+                 
                     setTimeout(function() {
                         successMsg.style.opacity = '0';
                     }, 2000);
 
-                    // Uncheck all checkboxes
+                 
                     var checkboxes = document.getElementsByName('attendance');
                     for (var i = 0; i < checkboxes.length; i++) {
                         checkboxes[i].checked = false;
                     }
 
-                    // Clear the time and date fields
+                  
                     document.getElementById('attendance_time').value = '';
                     document.getElementById('attendance_date').value = '';
 
                     reloadRecordTable();
                 },
                 error: function(xhr, status, error) {
-                    // Display error message
+                 
                     var failureMsg = document.getElementById('failure-msg');
                     failureMsg.innerText = "Error Submitting Attendance!";
-                    failureMsg.style.opacity = '1'; // Show the failure message
+                    failureMsg.style.opacity = '1'; 
 
                     var successMsg = document.getElementById('success-msg');
-                    successMsg.style.opacity = '0'; // Hide the success message
+                    successMsg.style.opacity = '0';
 
-                    // Hide the failure message smoothly after 2 seconds
+               
                     setTimeout(function() {
                         failureMsg.style.opacity = '0';
                     }, 2000);
@@ -319,23 +321,26 @@ while ($class = mysqli_fetch_assoc($classesResult)) {
             }
         }
 
-        function printTable() {
-            var tableHtml = document.getElementById('record_table').innerHTML;
+function printTable() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'table_template.php', true);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      var templateContent = xhr.responseText;
+      var tableHtml = document.getElementById('record_table').innerHTML;
+      var combinedHtml = templateContent.replace('<table id="record_table"></table>', tableHtml);
 
-            var newWindow = window.open('', '_blank');
-            newWindow.document.write('<html><head><title>Record Table</title>');
-            newWindow.document.write('<style>');
-            newWindow.document.write('table { border-collapse: collapse; width: 100%; }');
-            newWindow.document.write('th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }');
-            newWindow.document.write('</style>');
-            newWindow.document.write('</head><body>');
-            newWindow.document.write('<h2>Record Table</h2>');
-            newWindow.document.write('<table>' + tableHtml + '</table>');
-            newWindow.document.write('</body></html>');
-            newWindow.document.close();
+      // Create a new window to display the PDF preview
+      var newWindow = window.open('', '_blank');
+      newWindow.document.write(combinedHtml);
+      newWindow.document.close();
 
-            newWindow.print();
-        }
+      // Call the print function on the new window
+      newWindow.print();
+    }
+  };
+  xhr.send();
+}
 
         function searchTable() {
             var searchInput = document.getElementById('searchBar').value.toLowerCase();
@@ -377,7 +382,7 @@ while ($class = mysqli_fetch_assoc($classesResult)) {
                     attendanceCheckbox.checked = false;
                 } else {
                     attendanceCheckbox.disabled = false;
-                    attendanceCheckbox.checked = false; // Uncheck the checkbox
+                    attendanceCheckbox.checked = false;
                 }
 
                 filterStudents();
@@ -385,49 +390,48 @@ while ($class = mysqli_fetch_assoc($classesResult)) {
         });
 
         function reloadRecordTable() {
-            // Fetch the class ID and time values
+         
             var selectedClass = document.getElementById('class_id').value;
             var selectedTime = document.getElementById('attendance_time').value;
 
-            // Check if both class ID and time are selected
+       
             if (selectedClass === '' || selectedTime === '') {
-                return; // Exit the function if not selected
+                return; 
             }
 
-            // Perform an AJAX request to fetch the updated record table HTML
             $.ajax({
-                url: 'fetch_record_table.php', // Replace with the actual URL or file path to fetch the updated record table
+                url: 'fetch_record_table.php', 
                 method: 'POST',
                 data: {
                     class_id: selectedClass,
                     attendance_time: selectedTime
                 },
                 success: function(response) {
-                    // Update the record table with the fetched HTML
+             
                     var recordTable = document.getElementById('record_table');
                     recordTable.innerHTML = response;
                 },
                 error: function(xhr, status, error) {
-                    console.error(error); // Log any errors to the console
+                    console.error(error); 
                 }
             });
         }
 
         function generateQRCode() {
-            // Fetch the class time and date values
+        
             var selectedClass = document.getElementById('class_id').value;
             var selectedTime = document.getElementById('attendance_time').value;
             var selectedDate = document.getElementById('attendance_date').value;
 
-            // Check if all required fields are selected
+        
             if (selectedClass === '' || selectedTime === '' || selectedDate === '') {
                 alert('Please select class, time, and date before generating the QR code.');
                 return;
             }
 
-            // Perform an AJAX request to generate the QR code
+        
             $.ajax({
-                url: 'generate_qrcode.php', // Replace with the actual URL or file path to generate the QR code
+                url: 'generate_qrcode.php',
                 method: 'POST',
                 data: {
                     class_id: selectedClass,
@@ -435,14 +439,14 @@ while ($class = mysqli_fetch_assoc($classesResult)) {
                     attendance_date: selectedDate
                 },
                 success: function(response) {
-                    // Create the overlay element
+            
                     var overlay = document.createElement('div');
                     overlay.className = 'overlay';
                     overlay.addEventListener('click', function() {
                         closeModal();
                     });
 
-                    // Create the modal element
+          
                     var modal = document.createElement('div');
                     modal.className = 'modal';
                     modal.innerHTML = '<div class="modal-dialog">' +
@@ -459,40 +463,39 @@ while ($class = mysqli_fetch_assoc($classesResult)) {
                         '</div>' +
                         '</div>';
 
-                    // Append the modal to the overlay
+               
                     overlay.appendChild(modal);
 
-                    // Append the overlay to the body
+             
                     document.body.appendChild(overlay);
 
-                    // Show the overlay
+                
                     overlay.style.display = 'block';
 
-                    // Get the close button inside the modal
+               
                     var closeButton = modal.querySelector('.close');
 
-                    // Close the modal when the close button is clicked
                     closeButton.addEventListener('click', function() {
                         closeModal();
                     });
 
-                    // Function to close the modal and remove the overlay
+               
                     function closeModal() {
                         overlay.style.display = 'none';
                         overlay.remove();
                     }
                 },
                 error: function(xhr, status, error) {
-                    console.error(error); // Log any errors to the console
+                    console.error(error); 
                 }
             });
         }
 
-        // Function to generate the record table
+    
         function generateRecordTable(records) {
             const table = document.createElement('table');
 
-            // Generate table rows
+         
             records.forEach(record => {
                 const row = table.insertRow();
                 const idCell = row.insertCell();
@@ -505,7 +508,7 @@ while ($class = mysqli_fetch_assoc($classesResult)) {
             return table;
         }
 
-        // Call the reloadRecordTable() function initially to load the record table based on the selected class and time
+      
         reloadRecordTable();
     </script>
 </head>
@@ -534,7 +537,7 @@ while ($class = mysqli_fetch_assoc($classesResult)) {
             <select id="class_id" onchange="filterStudents(); selectChangeHandler(this)">
                 <option value="">-- Select Class --</option>
                 <?php
-                // Loop through the classes and generate options
+           
                 foreach ($classes as $class) {
                     echo "<option value='{$class['class_id']}'>ID: {$class['class_id']} | {$class['name']} | F{$class['form']}</option>";
                 }
@@ -573,13 +576,13 @@ while ($class = mysqli_fetch_assoc($classesResult)) {
             </thead>
             <tbody>
                 <?php
-                // Define and set the $checkboxDisabled variable based on your condition
-                $checkboxDisabled = true; // or false, depending on your logic
+           
+                $checkboxDisabled = true; 
 
                 while ($student = mysqli_fetch_assoc($studentsResult)) {
                     echo "<tr data-classes='";
 
-                    // Get the classes attended by the student
+                 
                     $studentId = $student['student_id'];
                     $fetchStudentClassesQuery = "SELECT c.class_id, c.form FROM class_student cs
                      INNER JOIN class c ON cs.class_id = c.class_id
@@ -621,7 +624,7 @@ while ($class = mysqli_fetch_assoc($classesResult)) {
                 </thead>
                 <tbody>
                     <?php
-                    // Fetch all attendance records from the database
+               
                     $fetchAttendanceQuery = "SELECT a.attendance_id, CONCAT(c.class_id, ' | ', c.name) AS class_info, c.form, CONCAT(s.student_id, ' | ', s.name) AS student_info, a.time, a.date, a.status 
                             FROM attendance a
                             INNER JOIN class c ON a.class_id = c.class_id
